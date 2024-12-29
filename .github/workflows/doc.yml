@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v1
     - name: Setup OCaml
-      uses: toots/setup-ocaml@master
+      uses: ocaml/setup-ocaml@v3
       with:
         ocaml-compiler: 4.14.x
     - name: Pin locally
