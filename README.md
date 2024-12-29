@@ -1,42 +1,52 @@
-ocaml-ogg
-=========
+ocaml-xiph
+============
 
-This package contains an OCaml interface for the `ogg` library
+![GitHub](https://img.shields.io/github/license/savonet/ocaml-xiph)
+![CI](https://github.com/savonet/ocaml-xiph/workflows/CI/badge.svg)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/savonet/ocaml-xiph)
 
-Please read the COPYING file before using this software.
+This repository provides various OCaml bindings to the [xiph](https://xiph.org/) libraries.
+
+Documentation:
+=============
+
+The [API documentation is available here](http://www.liquidsoap.info/ocaml-xiph/).
 
 Prerequisites:
 ==============
 
 - ocaml
-- libogg
+- dune
 - findlib
-- dune >= 2.0
+- libogg
+- libvorbis
+- libspeex
+- libflac
+- libtheora
+- libopus
+
+See [dune-project](dune-project) file for versions.
+
+Installation:
+=============
+
+The preferred installation method is via [opam](http://opam.ocaml.org/):
+
+```
+opam install ogg vorbis ...
+```
+
+If you wish to install the latest code from this repository, you can do:
+
+```
+opam install .
+```
+
+From within this repository.
 
 Compilation:
 ============
 
 ```
-$ dune build
+dune build
 ```
-
-This should build both the native and the byte-code version of the
-extension library.
-
-Installation:
-=============
-
-Via `opam`:
-
-```
-$ opam install ogg
-```
-
-Via `dune` (for developers):
-```
-$ dune install
-```
-
-This should install the library file (using ocamlfind) in the
-appropriate place.
-
