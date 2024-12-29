@@ -2,7 +2,7 @@
 (version 1.0.0)
 (name ogg)
 (source (github savonet/ocaml-xiph))
-(license "LGPL-2.1-or-later WITH OCaml-LGPL-linking-exception")
+(license LGPL-2.1-only)
 (authors "The Savonet Team <savonet-users@lists.sourceforge.net>")
 (maintainers "The Savonet Team <savonet-users@lists.sourceforge.net>")
 
