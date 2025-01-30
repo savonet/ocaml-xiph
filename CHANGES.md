@@ -1,4 +1,4 @@
-1.0.0 (unreleased)
+1.0.0 (2025-01-30)
 =====
 * Initial release of the combined modules
 * `ogg`: Add optional `fill` argument to decoders, used to pull more data when needed.
