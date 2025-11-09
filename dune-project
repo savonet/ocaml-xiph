@@ -1,4 +1,4 @@
-(lang dune 2.8)
+(lang dune 3.8)
 (version 1.0.0)
 (name ogg)
 (source (github savonet/ocaml-xiph))
@@ -7,6 +7,7 @@
 (maintainers "The Savonet Team <savonet-users@lists.sourceforge.net>")
 
 (generate_opam_files true)
+(opam_file_location inside_opam_directory)
 (use_standard_c_and_cxx_flags false)
 
 (package

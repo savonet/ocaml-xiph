@@ -11,7 +11,7 @@ depends: [
   "conf-libflac"
   "conf-pkg-config"
   "ocaml" {>= "4.03.0"}
-  "dune" {>= "2.8"}
+  "dune" {>= "3.8"}
   "dune-configurator"
   "odoc" {with-doc}
 ]
