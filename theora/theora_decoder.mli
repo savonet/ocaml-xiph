@@ -18,8 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *)
 
-(** Implementation of the theora decoder
-  * for the [Ogg_demuxer] module. *)
+(** Implementation of the theora decoder * for the [Ogg_demuxer] module. *)
 
 (** Register the decoder. *)
 val register : unit -> unit

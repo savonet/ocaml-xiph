@@ -1,7 +1,6 @@
 let src = ref ""
 let dst = ref ""
 let buflen = ref 1024
-let flush_outchan = flush
 
 let input_string chan len =
   let ans = Bytes.create len in

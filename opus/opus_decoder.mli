@@ -18,8 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *)
 
-(** This module provides a opus decoder for
-  * the [Ogg_demuxer] module. *)
+(** This module provides a opus decoder for * the [Ogg_demuxer] module. *)
 
 val decoder_samplerate : int ref
 

@@ -18,8 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *)
 
-(** This module provides a vorbis decoder for
-  * the [Ogg_demuxer] module. *)
+(** This module provides a vorbis decoder for * the [Ogg_demuxer] module. *)
 
 (** Register the vorbis decoder *)
 val register : unit -> unit

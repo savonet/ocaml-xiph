@@ -69,7 +69,7 @@ type colorspace =
 type pixelformat = PF_420 | PF_reserved | PF_422 | PF_444
 
 type info = {
-  frame_width : int;  (** The encoded frame width.  *)
+  frame_width : int;  (** The encoded frame width. *)
   frame_height : int;  (** The encoded frame height. *)
   picture_width : int;  (** The displayed picture width. *)
   picture_height : int;  (** The displayed picture height. *)
@@ -80,7 +80,8 @@ type info = {
   target_bitrate : int;  (** The target bit-rate in bits per second. *)
   quality : int;  (** The target quality level. *)
   keyframe_granule_shift : int;
-      (** The amount to shift to extract the last keyframe number from the granule position. *)
+      (** The amount to shift to extract the last keyframe number from the
+          granule position. *)
   version_major : int;
   version_minor : int;
   version_subminor : int;

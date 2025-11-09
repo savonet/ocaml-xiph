@@ -29,9 +29,9 @@
 
 (** {1 Exceptions} *)
 
-(** The call returned a 'false' status (eg, ov_bitrate_instant 
-  * can return OV_FALSE if playback is not in progress, and thus 
-  * there is no instantaneous bitrate information to report. *)
+(** The call returned a 'false' status (eg, ov_bitrate_instant * can return
+    OV_FALSE if playback is not in progress, and thus * there is no
+    instantaneous bitrate information to report. *)
 exception False
 
 (** Some parameters are invalid for this function. *)
@@ -61,12 +61,12 @@ exception Not_audio
 (** Internal logic fault; indicates a bug or heap/stack corruption. *)
 exception Internal_fault
 
-(** Indicates there was an interruption in the data (one of: garbage between
-  * pages, loss of sync followed by recapture, or a corrupt page). *)
+(** Indicates there was an interruption in the data (one of: garbage between *
+    pages, loss of sync followed by recapture, or a corrupt page). *)
 exception Hole_in_data
 
-(** Indicates that an invalid stream section was supplied,
-  * or the requested link is corrupt. *)
+(** Indicates that an invalid stream section was supplied, * or the requested
+    link is corrupt. *)
 exception Bad_link
 
 (** Invalid Vorbis bitstream header. *)
@@ -81,15 +81,13 @@ exception Unknown_error of int
 (** Error while converting utf8. *)
 exception Utf8_failure of string
 
-(** Return a string representation
-  * of an exception *)
+(** Return a string representation * of an exception *)
 val string_of_exc : exn -> string option
 
 (** {1 Useful types} *)
 
-(** Index of a logical bitstream. The special value -1 means the physical
-  * bitsream.
-  *)
+(** Index of a logical bitstream. The special value -1 means the physical *
+    bitsream. *)
 type bitstream = int
 
 (** Vorbis informations about a file. *)
@@ -114,16 +112,15 @@ module Encoder : sig
   (** Internal state of an encoder. *)
   type t
 
-  (** [create chans rate max_br nom_br min_br] creates a new encoder with
-    * [chans] channels, with sample rate [rate] Hz and with respectively [max_br],
-    * [nom_br] and [min_br] as maximal, nominal and minimal bitrates (in bps).
-    *)
+  (** [create chans rate max_br nom_br min_br] creates a new encoder with *
+      [chans] channels, with sample rate [rate] Hz and with respectively
+      [max_br], * [nom_br] and [min_br] as maximal, nominal and minimal bitrates
+      (in bps). *)
   val create : int -> int -> int -> int -> int -> t
 
   (** [create_vbr chans rate quality] creates a new encoder in variable bitrate
-    * with [chans] channels, with sample rate [rate] Hz and with quality
-    * [quality], which should be between -1 and 1 (1 is the best).
-    *)
+      * with [chans] channels, with sample rate [rate] Hz and with quality *
+      [quality], which should be between -1 and 1 (1 is the best). *)
   val create_vbr : int -> int -> float -> t
 
   val reset : t -> unit
@@ -132,23 +129,21 @@ module Encoder : sig
   val headerout :
     ?encoder:string -> t -> Ogg.Stream.stream -> (string * string) list -> unit
 
-  (** Encoder a header, but do not submit packet to
-    * Ogg Stream. Usefull when multiplexing ogg streams
-    * since the all first packets of each streams must be packed
-    * in the initial pages. *)
+  (** Encoder a header, but do not submit packet to * Ogg Stream. Usefull when
+      multiplexing ogg streams * since the all first packets of each streams
+      must be packed * in the initial pages. *)
   val headerout_packetout :
     ?encoder:string ->
     t ->
     (string * string) list ->
     Ogg.Stream.packet * Ogg.Stream.packet * Ogg.Stream.packet
 
-  (** Get the number of audio channels expected by 
-    * the encoder. *)
+  (** Get the number of audio channels expected by * the encoder. *)
   val get_channels : t -> int
 
-  (** Encode a buffer of PCM data. 
-    * The PCM data array must have at least the expected
-    * number of channels. Otherwise, the function raises [Invalid_channels]. *)
+  (** Encode a buffer of PCM data. * The PCM data array must have at least the
+      expected * number of channels. Otherwise, the function raises
+      [Invalid_channels]. *)
   val encode_buffer_float :
     t -> Ogg.Stream.stream -> float array array -> int -> int -> unit
 
@@ -160,9 +155,9 @@ module Encoder : sig
     int ->
     unit
 
-  (** Convert a granulepos to absolute time in seconds. The granulepos is
-    * interpreted in the context of a given encoder, and gives
-    * the end time of a frame's presentation as used in Ogg mux ordering. *)
+  (** Convert a granulepos to absolute time in seconds. The granulepos is *
+      interpreted in the context of a given encoder, and gives * the end time of
+      a frame's presentation as used in Ogg mux ordering. *)
   val time_of_granulepos : t -> Int64.t -> Nativeint.t
 
   val end_of_stream : t -> Ogg.Stream.stream -> unit
@@ -174,8 +169,8 @@ module Decoder : sig
   (** Internal decoder state *)
   type t
 
-  (** Initialize decoder. Needs the first 3 packets of the ogg logical
-    * stream. Use [check_packet] to check against the first one. *)
+  (** Initialize decoder. Needs the first 3 packets of the ogg logical * stream.
+      Use [check_packet] to check against the first one. *)
   val init : Ogg.Stream.packet -> Ogg.Stream.packet -> Ogg.Stream.packet -> t
 
   (** Get vorbis infos from the decoder *)
@@ -184,19 +179,19 @@ module Decoder : sig
   (** Get vorbis comments from the decoder *)
   val comments : t -> string * (string * string) list
 
-  (** Check wether a ogg packet contains vorbis data.
-    * Usefull for parsing ogg containers with multiple streams. *)
+  (** Check wether a ogg packet contains vorbis data. * Usefull for parsing ogg
+      containers with multiple streams. *)
   val check_packet : Ogg.Stream.packet -> bool
 
-  (** [decode_pcm dec stream buffer pos offset] decodes pcm float data
-    * from [stream]. The floats are written in [buffer], starting at
-    * position [pos]. The function returns the number of samples actually written.*)
+  (** [decode_pcm dec stream buffer pos offset] decodes pcm float data * from
+      [stream]. The floats are written in [buffer], starting at * position
+      [pos]. The function returns the number of samples actually written.*)
   val decode_pcm :
     t -> Ogg.Stream.stream -> float array array -> int -> int -> int
 
-  (** [decode_pcm_ba dec stream buffer pos offset] decodes pcm float data
-    * from [stream]. The floats are written in [buffer], starting at
-    * position [pos]. The function returns the number of samples actually written.*)
+  (** [decode_pcm_ba dec stream buffer pos offset] decodes pcm float data * from
+      [stream]. The floats are written in [buffer], starting at * position
+      [pos]. The function returns the number of samples actually written.*)
   val decode_pcm_ba :
     t ->
     Ogg.Stream.stream ->
@@ -218,14 +213,14 @@ module File : sig
     (** Internal state of a decoder. *)
     type t
 
-    (** [create read_func seek_func tell_func params] opens a
-      * stream like [openfile] for decoding but callbacks are used to
-      * manipulate the data. [read_func] should return the requested amount of bytes
-      * (or less if it is the end of file), [seek_funk] should return 0 if the seek
-      * was ok or -1 if the stream is not seekable, [tell_func] should return the current 
-      * offset or -1 if there is no notion of offset in the stream. 
-      * Raises: [Read_error], [Not_vorbis], [Version_mismatch], [Bad_header], [Internal_fault].
-      *)
+    (** [create read_func seek_func tell_func params] opens a * stream like
+        [openfile] for decoding but callbacks are used to * manipulate the data.
+        [read_func] should return the requested amount of bytes * (or less if it
+        is the end of file), [seek_funk] should return 0 if the seek * was ok or
+        -1 if the stream is not seekable, [tell_func] should return the current
+        * offset or -1 if there is no notion of offset in the stream. * Raises:
+        [Read_error], [Not_vorbis], [Version_mismatch], [Bad_header],
+        [Internal_fault]. *)
     val create :
       (int -> string * int) ->
       (int -> Unix.seek_command -> int) ->
@@ -277,17 +272,15 @@ module File : sig
     (** Get the number of logical bitstreams within a physical bitstream. *)
     val streams : t -> int
 
-    (** Get the index of the sequential logical bitstream currently being decoded
-      * (incremented at chaining boundaries even for non-seekable streams). For
-      * seekable streams, it represents the actual chaining index within the
-      * physical bitstream.
-      *)
+    (** Get the index of the sequential logical bitstream currently being
+        decoded * (incremented at chaining boundaries even for non-seekable
+        streams). For * seekable streams, it represents the actual chaining
+        index within the * physical bitstream. *)
     val bitstream : t -> bitstream
 
-    (** Get the vorbis comments from a vorbis file. The second argument is the
-      * number of the logical bitstream (the current bitstream is used if it is set
-      * to [None]).
-      *)
+    (** Get the vorbis comments from a vorbis file. The second argument is the *
+        number of the logical bitstream (the current bitstream is used if it is
+        set * to [None]). *)
     val comments : t -> bitstream -> string * (string * string) list
 
     (** Get the vorbis information from the stream header of a bitstream. *)
@@ -308,12 +301,10 @@ module File : sig
 end
 
 module Skeleton : sig
-  (** Generate a vorbis fisbone packet with 
-    * these parameters, to use in an ogg skeleton.
-    * Default value for [start_granule] is [Int64.zero],
-    * Default value for [headers] is ["Content-type","audio/vorbis"]
-    *
-    * See: http://xiph.org/ogg/doc/skeleton.html. *)
+  (** Generate a vorbis fisbone packet with * these parameters, to use in an ogg
+      skeleton. * Default value for [start_granule] is [Int64.zero], * Default
+      value for [headers] is ["Content-type","audio/vorbis"] * * See:
+      http://xiph.org/ogg/doc/skeleton.html. *)
   val fisbone :
     ?start_granule:Int64.t ->
     ?headers:(string * string) list ->

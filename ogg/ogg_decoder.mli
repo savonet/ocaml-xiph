@@ -22,14 +22,10 @@
 
 (** Ogg stream demuxer *)
 
-(** This module provides a functional abstract API to
-   * decode and seek in Ogg streams.
-   *
-   * Decoders are also provided in ocaml-vorbis,
-   * ocaml-speex, ocaml-schroedinger, ocaml-flac and
-   * ocaml-theora.
-   *
-   * Functions in this module are not thread safe! *)
+(** This module provides a functional abstract API to * decode and seek in Ogg
+    streams. * * Decoders are also provided in ocaml-vorbis, * ocaml-speex,
+    ocaml-schroedinger, ocaml-flac and * ocaml-theora. * * Functions in this
+    module are not thread safe! *)
 
 (** {2 Decoding} *)
 
@@ -45,13 +41,10 @@ type callbacks = {
   tell : (unit -> int) option;
 }
 
-(** Type for a decodable track.
-  * First element is a string describing
-  * the decoder used to decode the track.
-  * Second element is the serial number
-  * associated to the [Ogg.Stream.stream] logical
-  * stream used to pull data packets for that
-  * track. *)
+(** Type for a decodable track. * First element is a string describing * the
+    decoder used to decode the track. * Second element is the serial number *
+    associated to the [Ogg.Stream.stream] logical * stream used to pull data
+    packets for that * track. *)
 type track =
   | Audio_track of (string * nativeint)
   | Video_track of (string * nativeint)
@@ -62,10 +55,8 @@ type standard_tracks = {
   mutable video_track : track option;
 }
 
-(** Type for metadata. First element
-  * is a string describing the vendor, second
-  * element is a list of metadata of the form:
-  * [(label,value)]. *)
+(** Type for metadata. First element * is a string describing the vendor, second
+    * element is a list of metadata of the form: * [(label,value)]. *)
 type metadata = string * (string * string) list
 
 (** Type for audio information. *)
@@ -115,7 +106,7 @@ type video_data = {
   v : video_plane;  (** Cr data *)
 }
 
-(** {3 Exceptions } *)
+(** {3 Exceptions} *)
 
 exception Invalid_stream
 exception Not_available
@@ -126,12 +117,11 @@ exception Not_available
  * been reached.. *)
 exception End_of_stream
 
-(** {3 Initialization functions } *)
+(** {3 Initialization functions} *)
 
-(** Initiate a decoder with the given callbacks.
-  * [log] is an optional functioned used to
-  * return logged messages during the deocding
-  * process. *)
+(** Initiate a decoder with the given callbacks. * [log] is an optional
+    functioned used to * return logged messages during the deocding * process.
+*)
 val init : ?log:(string -> unit) -> callbacks -> t
 
 (** Initiate a decoder from a given file name. *)
@@ -140,41 +130,34 @@ val init_from_file : ?log:(string -> unit) -> string -> t * Unix.file_descr
 (** Initate a decoder from a given [Unix.file_descriptor] *)
 val init_from_fd : ?log:(string -> unit) -> Unix.file_descr -> t
 
-(** Get the Ogg.Sync handler associated to
-  * the decoder. Use only if know what you are doing. *)
+(** Get the Ogg.Sync handler associated to * the decoder. Use only if know what
+    you are doing. *)
 val get_ogg_sync : t -> Ogg.Sync.t
 
-(** Reset encoder, try to parse a new sequentialized stream.
-  * To use when end_of_stream has been reached. *)
+(** Reset encoder, try to parse a new sequentialized stream. * To use when
+    end_of_stream has been reached. *)
 val reset : t -> unit
 
-(** Consume all remaining pages of the current
-  * stream. This function may be called to skip
-  * a sequentialized stream but it may be quite
-  * CPU intensive if there are many pages remaining..
-  *
-  * [eos dec] is [true] after this call. *)
+(** Consume all remaining pages of the current * stream. This function may be
+    called to skip * a sequentialized stream but it may be quite * CPU intensive
+    if there are many pages remaining.. * * [eos dec] is [true] after this call.
+*)
 val abort : t -> unit
 
-(** [true] if the decoder has reached the end of each
-  * logical streams and all data has been decoded.
-  *
-  * If you do not plan on decoding some data,
-  * you should use [drop_track] to indicate it
-  * to the decoder. Otherwise, [eos] will return
-  * [false] until you have decoded all data. *)
+(** [true] if the decoder has reached the end of each * logical streams and all
+    data has been decoded. * * If you do not plan on decoding some data, * you
+    should use [drop_track] to indicate it * to the decoder. Otherwise, [eos]
+    will return * [false] until you have decoded all data. *)
 val eos : t -> bool
 
 (** Get all decodable tracks available. *)
 val get_tracks : t -> track list
 
-(** Get the first available audio and
-  * video tracks and drop the other one. *)
+(** Get the first available audio and * video tracks and drop the other one. *)
 val get_standard_tracks : t -> standard_tracks
 
-(** Update a given record of standard tracks. You should
-  * use this after a [reset] to update the standard tracks
-  * with the newly created tracks. *)
+(** Update a given record of standard tracks. You should * use this after a
+    [reset] to update the standard tracks * with the newly created tracks. *)
 val update_standard_tracks : t -> standard_tracks -> unit
 
 (** Remove all tracks of the given type. *)
@@ -182,19 +165,17 @@ val drop_track : t -> track -> unit
 
 (** {3 Information functions} *)
 
-(** Get informations about the
-  * audio track. *)
+(** Get informations about the * audio track. *)
 val audio_info : t -> track -> audio_info * metadata
 
 (** [true] if the decoder can decoder to bigarray data. *)
 val can_decode_ba : t -> track -> bool
 
-(** Get informations about the
-  * video track. *)
+(** Get informations about the * video track. *)
 val video_info : t -> track -> video_info * metadata
 
-(** Get the sample_rate of the track
-  * of that type. Returns a pair [(numerator,denominator)]. *)
+(** Get the sample_rate of the track * of that type. Returns a pair
+    [(numerator,denominator)]. *)
 val sample_rate : t -> track -> int * int
 
 (** Get track absolute position. *)
@@ -205,54 +186,40 @@ val get_position : t -> float
 
 (** {3 Seeking functions} *)
 
-(** Returns [true] if the decoder
-  * can be used with the [seek] function. *)
+(** Returns [true] if the decoder * can be used with the [seek] function. *)
 val can_seek : t -> bool
 
-(** Seek to an absolute or relative position in seconds.
-  *
-  * Raises [Not_available] if seeking is
-  * not possible.
-  *
-  * Raises [End_of_stream] if the end of
-  * current stream has been reached while
-  * seeking. You may call [reset] in this
-  * situation to see if there is a new seqentialized
-  * stream available.
-  *
-  * Returns the time actually reached, either in
-  * relative time or absolute time. *)
+(** Seek to an absolute or relative position in seconds. * * Raises
+    [Not_available] if seeking is * not possible. * * Raises [End_of_stream] if
+    the end of * current stream has been reached while * seeking. You may call
+    [reset] in this * situation to see if there is a new seqentialized * stream
+    available. * * Returns the time actually reached, either in * relative time
+    or absolute time. *)
 val seek : ?relative:bool -> t -> float -> float
 
 (** {3 Decoding functions} *)
 
-(** Decode audio data, if possible.
-  * Decoded data is passed to the second argument.
-  *
-  * Raises [End_of_stream] if all stream have ended.
-  * In this case, you can try [reset] to see if there is a
-  * new sequentialized stream. *)
+(** Decode audio data, if possible. * Decoded data is passed to the second
+    argument. * * Raises [End_of_stream] if all stream have ended. * In this
+    case, you can try [reset] to see if there is a * new sequentialized stream.
+*)
 val decode_audio : t -> track -> (audio_data -> unit) -> unit
 
-(** Decode audio data, if possible.
-  * Decoded data is passed to the second argument.
-  *
-  * Raises [End_of_stream] if all stream have ended.
-  * In this case, you can try [reset] to see if there is a
-  * new sequentialized stream. *)
+(** Decode audio data, if possible. * Decoded data is passed to the second
+    argument. * * Raises [End_of_stream] if all stream have ended. * In this
+    case, you can try [reset] to see if there is a * new sequentialized stream.
+*)
 val decode_audio_ba : t -> track -> (audio_ba_data -> unit) -> unit
 
-(** Decode video data, if possible.
-  * Decoded data is passed to the second argument.
-  *
-  * Raises [End_of_stream] if all streams have ended.
-  * In this case, you can try [reset] to see if there is a
-  * new sequentialized stream. *)
+(** Decode video data, if possible. * Decoded data is passed to the second
+    argument. * * Raises [End_of_stream] if all streams have ended. * In this
+    case, you can try [reset] to see if there is a * new sequentialized stream.
+*)
 val decode_video : t -> track -> (video_data -> unit) -> unit
 
 (** {2 Implementing decoders} *)
 
-(** {3 Types } *)
+(** {3 Types} *)
 
 (** Generic type for a decoder. *)
 type ('a, 'b) decoder = {
@@ -275,12 +242,11 @@ type decoders =
       (audio_info, audio_data) decoder * (audio_info, audio_ba_data) decoder
   | Unknown
 
-(** Type used to register a new decoder. First
-  * element is a function used to check if the initial [Ogg.Stream.packet]
-  * of an [Ogg.Stream.stream] matches the format decodable by this decoder.
-  * Second element is a function that instanciates the actual decoder
-  * using the initial [Ogg.Stream.stream] used to pull data packets for the
-  * decoder. *)
+(** Type used to register a new decoder. First * element is a function used to
+    check if the initial [Ogg.Stream.packet] * of an [Ogg.Stream.stream] matches
+    the format decodable by this decoder. * Second element is a function that
+    instanciates the actual decoder * using the initial [Ogg.Stream.stream] used
+    to pull data packets for the * decoder. *)
 type register_decoder =
   (Ogg.Stream.packet -> bool)
   * (fill:(unit -> unit) -> Ogg.Stream.stream -> decoders)

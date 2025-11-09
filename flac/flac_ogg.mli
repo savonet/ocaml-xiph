@@ -23,8 +23,7 @@
 (** {1 Ogg/flac encoder/decoder modules for OCaml} *)
 
 module Decoder : sig
-  (** Check if an ogg packet is the first
-    * packet of an ogg/flac stream. *)
+  (** Check if an ogg packet is the first * packet of an ogg/flac stream. *)
   val check_packet : Ogg.Stream.packet -> bool
 
   val create :
@@ -47,12 +46,10 @@ end
 
 (** Ogg/flac skeleton module *)
 module Skeleton : sig
-  (** Generate a flac fisbone packet with
-    * these parameters, to use in an ogg skeleton.
-    * Default value for [start_granule] is [Int64.zero],
-    * Default value for [headers] is ["Content-type","audio/x-flac"]
-    *
-    * See: http://xiph.org/ogg/doc/skeleton.html. *)
+  (** Generate a flac fisbone packet with * these parameters, to use in an ogg
+      skeleton. * Default value for [start_granule] is [Int64.zero], * Default
+      value for [headers] is ["Content-type","audio/x-flac"] * * See:
+      http://xiph.org/ogg/doc/skeleton.html. *)
   val fisbone :
     ?start_granule:Int64.t ->
     ?headers:(string * string) list ->

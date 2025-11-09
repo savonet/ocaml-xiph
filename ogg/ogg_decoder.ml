@@ -245,9 +245,7 @@ let test dec page =
     raise (Exit (serial, os, Unknown))
   with Exit (s, o, d) -> (s, o, d)
 
-(** This should be called only
-  * when we are near the end of
-  * a stream... *)
+(** This should be called only * when we are near the end of * a stream... *)
 let abort dec =
   dec.started <- true;
   begin

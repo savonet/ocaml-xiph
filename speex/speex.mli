@@ -120,22 +120,23 @@ module Header : sig
     unit ->
     t
 
-  (** [encode_header_packetout header metadata]: output ogg packets containing the header. 
-    * First packet contains speex audio codec settings, second the metadata. *)
+  (** [encode_header_packetout header metadata]: output ogg packets containing
+      the header. * First packet contains speex audio codec settings, second the
+      metadata. *)
   val encode_header_packetout :
     t -> (string * string) list -> Ogg.Stream.packet * Ogg.Stream.packet
 
-  (** Output ogg packets containing the header and put them into the given stream. *)
+  (** Output ogg packets containing the header and put them into the given
+      stream. *)
   val encode_header : t -> (string * string) list -> Ogg.Stream.stream -> unit
 
-  (** Decode the speex header contained in the given packet. 
-    * 
-    * Raises [Invalid_argument] if the packet does not contain speex audio codec data. *)
+  (** Decode the speex header contained in the given packet. * * Raises
+      [Invalid_argument] if the packet does not contain speex audio codec data.
+  *)
   val header_of_packet : Ogg.Stream.packet -> t
 
-  (** Decode the metadata contained in the given packet. 
-    * 
-    * Raises [Invalid_argument] if the packet does not contain speex metadata. *)
+  (** Decode the metadata contained in the given packet. * * Raises
+      [Invalid_argument] if the packet does not contain speex metadata. *)
   val comments_of_packet : Ogg.Stream.packet -> string * (string * string) list
 end
 
@@ -152,10 +153,10 @@ module Encoder : sig
   (** Set a parameter. *)
   val set : t -> control -> int -> unit
 
-  (** [encode_page encoder stream f]: calls [f] to get audio data and encode it until a page is ready. 
-    *
-    * Known issue: float expected values seem not to be in [-1..1] but in
-    * [-32768..32767] which does not seem to be correct. *)
+  (** [encode_page encoder stream f]: calls [f] to get audio data and encode it
+      until a page is ready. * * Known issue: float expected values seem not to
+      be in [-1..1] but in * [-32768..32767] which does not seem to be correct.
+  *)
   val encode_page :
     t -> Ogg.Stream.stream -> (unit -> float array) -> Ogg.Page.t
 
@@ -173,10 +174,10 @@ module Encoder : sig
 
   (** Set the end of stream for this stream. *)
   val eos : t -> Ogg.Stream.stream -> unit
-    [@@alert
-      deprecated
-        "This function generates invalid bitstream. Please use \
-         Ogg.Stream.terminate instead!"]
+  [@@alert
+    deprecated
+      "This function generates invalid bitstream. Please use \
+       Ogg.Stream.terminate instead!"]
 end
 
 module Decoder : sig
@@ -242,8 +243,8 @@ module Wrapper : sig
     (** Open the passed feed as a new speex stream. *)
     val open_feed : read -> t
 
-    (** Get the serial of the stream currently being decoded.
-      * This value may change if the stream contains sequentialized ogg streams. *)
+    (** Get the serial of the stream currently being decoded. * This value may
+        change if the stream contains sequentialized ogg streams. *)
     val serial : t -> nativeint
 
     (** Get current comments. *)
@@ -279,12 +280,10 @@ module Wrapper : sig
 end
 
 module Skeleton : sig
-  (** Generate a vorbis fisbone packet with
-    * these parameters, to use in an ogg skeleton.
-    * Default value for [start_granule] is [Int64.zero],
-    * Default value for [headers] is ["Content-type","audio/speex"]
-    *
-    * See: http://xiph.org/ogg/doc/skeleton.html. *)
+  (** Generate a vorbis fisbone packet with * these parameters, to use in an ogg
+      skeleton. * Default value for [start_granule] is [Int64.zero], * Default
+      value for [headers] is ["Content-type","audio/speex"] * * See:
+      http://xiph.org/ogg/doc/skeleton.html. *)
   val fisbone :
     ?start_granule:Int64.t ->
     ?headers:(string * string) list ->

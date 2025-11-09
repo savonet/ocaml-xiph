@@ -126,7 +126,9 @@ let () =
           generator ()
       | Duplicate_frame -> (
           (* Got a duplicate frame, sending previous one ! *)
-          match !latest_yuv with Some x -> x | None -> raise Internal_error)
+            match !latest_yuv with
+            | Some x -> x
+            | None -> raise Internal_error)
   in
   let s_o_p (h, b) = h ^ b in
   Printf.printf "Starting transcoding loop !\n%!";

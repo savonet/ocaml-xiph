@@ -67,7 +67,7 @@ module Decoder : sig
     *   (generic, file, ogg) are only used with the same
     *   type of callbacks. *)
 
-  (** {3 Types } *)
+  (** {3 Types} *)
 
   type t
 
@@ -106,7 +106,7 @@ module Decoder : sig
          an uninitialized ogg decoder. *)
     | `Uninitialized ]
 
-  (** {3 Exceptions } *)
+  (** {3 Exceptions} *)
 
   (** An error in the stream caused the decoder to lose synchronization. *)
   exception Lost_sync
@@ -120,15 +120,13 @@ module Decoder : sig
   (** The decoder encountered reserved fields in use in the stream. *)
   exception Unparseable_stream
 
-  (** Raised if trying to decode a stream that
-    * is not flac. *)
+  (** Raised if trying to decode a stream that * is not flac. *)
   exception Not_flac
 
   (** {3 Functions} *)
 
-  (** Create a decoder. The decoder will be used to decode
-    * all metadata. Initial audio data shall be immediatly available
-    * after this call. *)
+  (** Create a decoder. The decoder will be used to decode * all metadata.
+      Initial audio data shall be immediatly available * after this call. *)
   val create :
     ?seek:(int64 -> unit) ->
     ?tell:(unit -> int64) ->
@@ -142,35 +140,28 @@ module Decoder : sig
   (** Decode one frame of audio data. *)
   val process : t -> unit
 
-  (** Flush the input and seek to an absolute sample.
-    * Decoding will resume at the given sample. Note
-    * that because of this, the next write callback may
-    * contain a partial block.  The client must support seeking
-    * the input or this function will fail and return [false].
-    * Furthermore, if the decoder state is [`Seek_error]
-    * then the decoder must be flushed or reset
-    * before decoding can continue. *)
+  (** Flush the input and seek to an absolute sample. * Decoding will resume at
+      the given sample. Note * that because of this, the next write callback may
+      * contain a partial block. The client must support seeking * the input or
+      this function will fail and return [false]. * Furthermore, if the decoder
+      state is [`Seek_error] * then the decoder must be flushed or reset *
+      before decoding can continue. *)
   val seek : t -> Int64.t -> bool
 
-  (** Flush the stream input.
-    *  The decoder's input buffer will be cleared and the state set to
-    *  [`Search_for_frame_sync].  This will also turn
-    *  off MD5 checking. *)
+  (** Flush the stream input. * The decoder's input buffer will be cleared and
+      the state set to * [`Search_for_frame_sync]. This will also turn * off MD5
+      checking. *)
   val flush : t -> bool
 
-  (** Reset the decoding process.
-    *  The decoder's input buffer will be cleared and the state set to
-    *  [`Search_for_metadata]. MD5 checking will be restored to its original
-    *  setting.
-    *
-    *  If the decoder is seekable, the decoder will also attempt to seek to
-    *  the beginning of the stream. If this rewind fails, this function will
-    * return [false].  It follows that [reset] cannot be used when decoding
-    * from [stdin].
-    *
-    *  If the decoder is not seekable (i.e. no seek callback was provided)
-    *  it is the duty of the client to start feeding data from the beginning
-    *  of the stream on the next [process]. *)
+  (** Reset the decoding process. * The decoder's input buffer will be cleared
+      and the state set to * [`Search_for_metadata]. MD5 checking will be
+      restored to its original * setting. * * If the decoder is seekable, the
+      decoder will also attempt to seek to * the beginning of the stream. If
+      this rewind fails, this function will * return [false]. It follows that
+      [reset] cannot be used when decoding * from [stdin]. * * If the decoder is
+      not seekable (i.e. no seek callback was provided) * it is the duty of the
+      client to start feeding data from the beginning * of the stream on the
+      next [process]. *)
   val reset : t -> bool
 
   (** Get the state of a decoder. *)
@@ -178,14 +169,13 @@ module Decoder : sig
 
   (** {3 Convenience} *)
 
-  (** Convert an audio array to a S16LE string for
-    * decoding FLAC to WAV and raw PCM *)
+  (** Convert an audio array to a S16LE string for * decoding FLAC to WAV and
+      raw PCM *)
   val to_s16le : float array array -> string
 
   (** Local file decoding. *)
   module File : sig
-    (** Convenience module to
-      * decode local files *)
+    (** Convenience module to * decode local files *)
 
     (** {3 Types} *)
 
@@ -199,11 +189,9 @@ module Decoder : sig
 
     (** {3 Functions} *)
 
-    (** Create a file decoder from a Unix file
-      * descriptor
-      *
-      * Note: this decoder requires seeking thus will only work on seekable
-      * file descriptor. *)
+    (** Create a file decoder from a Unix file * descriptor * * Note: this
+        decoder requires seeking thus will only work on seekable * file
+        descriptor. *)
     val create_from_fd :
       write:(float array array -> unit) -> Unix.file_descr -> handle
 
@@ -267,13 +255,12 @@ module Encoder : sig
 
   (** {3 Exceptions} *)
 
-  (** Raised when submiting invalid data to
-    * encode *)
+  (** Raised when submiting invalid data to * encode *)
   exception Invalid_data
 
-  (** Raised when initiating an encoder with
-    * invalid metadata. You can use `vorbiscomment_entry_name_is_legal`
-    * and `vorbiscomment_entry_value_is_legal` to check submitted metadata. *)
+  (** Raised when initiating an encoder with * invalid metadata. You can use
+      `vorbiscomment_entry_name_is_legal` * and
+      `vorbiscomment_entry_value_is_legal` to check submitted metadata. *)
   exception Invalid_metadata
 
   (** {3 Functions} *)
@@ -296,15 +283,14 @@ module Encoder : sig
   (** Encode some data *)
   val process : t -> float array array -> unit
 
-  (** Terminate an encoder. Causes the encoder to
-    * flush remaining encoded data. The encoder should
-    * not be used anymore afterwards. *)
+  (** Terminate an encoder. Causes the encoder to * flush remaining encoded
+      data. The encoder should * not be used anymore afterwards. *)
   val finish : t -> unit
 
   (** {3 Convenience} *)
 
-  (** Convert S16LE pcm data to an audio array for
-    * encoding WAV and raw PCM to flac. *)
+  (** Convert S16LE pcm data to an audio array for * encoding WAV and raw PCM to
+      flac. *)
   val from_s16le : string -> int -> float array array
 
   (** Encode to a local file *)
@@ -318,10 +304,9 @@ module Encoder : sig
 
     (** {3 Functions} *)
 
-    (** Create a file encoder writing data to a given Unix file descriptor.
-      *
-      * Note: this encoder requires seeking thus will only work on seekable
-      * file descriptor. *)
+    (** Create a file encoder writing data to a given Unix file descriptor. * *
+        Note: this encoder requires seeking thus will only work on seekable *
+        file descriptor. *)
     val create_from_fd :
       ?comments:comments -> params -> Unix.file_descr -> handle
 
@@ -330,6 +315,5 @@ module Encoder : sig
   end
 end
 
-(** Raised when an internal error occured. Should be
-  * reported if seen. *)
+(** Raised when an internal error occured. Should be * reported if seen. *)
 exception Internal

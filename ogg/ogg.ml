@@ -112,7 +112,8 @@ module Sync = struct
 
   type read = bytes -> int -> int -> int
 
-  (** External type for sync state. References the C sync structure, and the read function *)
+  (** External type for sync state. References the C sync structure, and the
+      read function *)
   type t = (read * sync) ref
 
   external create : unit -> sync = "ocaml_ogg_sync_init"

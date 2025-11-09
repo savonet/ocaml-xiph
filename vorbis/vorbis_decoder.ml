@@ -82,7 +82,8 @@ let decoder ~fill:_ os =
     try
       let ret = decode_pcm decoder !os buf 0 buflen in
       feed (Array.map (fun x -> sub_pcm x 0 ret) buf)
-    with (* Apparently, we should hide this one.. *)
+    with
+    (* Apparently, we should hide this one.. *)
     | Vorbis.False ->
       raise Ogg.Not_enough_data
   in
