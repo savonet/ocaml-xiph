@@ -1,4 +1,4 @@
-(lang dune 3.8)
+(lang dune 3.23)
 (version 1.0.0)
 (name ogg)
 (source (github savonet/ocaml-xiph))

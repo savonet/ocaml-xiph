@@ -10,7 +10,7 @@ bug-reports: "https://github.com/savonet/ocaml-xiph/issues"
 depends: [
   "conf-libtheora"
   "conf-pkg-config"
-  "dune" {>= "3.8"}
+  "dune" {>= "3.23"}
   "dune-configurator"
   "ogg" {= version}
   "odoc" {with-doc}

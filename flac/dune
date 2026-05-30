@@ -2,6 +2,7 @@
  (name flac)
  (public_name flac)
  (synopsis "OCaml bindings for libflac")
+ (enabled_if (= %{read:../detect/flac_available} true))
  (modules flac)
  (libraries unix)
  (foreign_stubs
@@ -9,14 +10,15 @@
   (names flac_stubs)
   (extra_deps "flac_config.h")
   (flags
-   (:include flac_c_flags.sexp)))
+   (:include ../detect/flac_c_flags.sexp)))
  (c_library_flags
-  (:include flac_c_library_flags.sexp)))
+  (:include ../detect/flac_c_library_flags.sexp)))
 
 (library
  (name flac_ogg)
  (public_name flac.ogg)
  (synopsis "API to decode flac data in ogg container")
+ (enabled_if (= %{read:../detect/flac_ogg_available} true))
  (libraries flac ogg)
  (optional)
  (modules flac_ogg)
@@ -24,9 +26,9 @@
   (language c)
   (names flac_ogg_stubs)
   (flags
-   (:include flac_ogg_c_flags.sexp)))
+   (:include ../detect/flac_ogg_c_flags.sexp)))
  (c_library_flags
-  (:include flac_ogg_c_library_flags.sexp)))
+  (:include ../detect/flac_ogg_c_library_flags.sexp)))
 
 (library
  (name flac_decoder)
@@ -37,11 +39,6 @@
  (modules flac_decoder))
 
 (rule
- (targets flac_config.h flac_c_flags.sexp flac_c_library_flags.sexp)
+ (targets flac_config.h)
  (action
   (run ./config/discover_flac.exe)))
-
-(rule
- (targets flac_ogg_c_flags.sexp flac_ogg_c_library_flags.sexp)
- (action
-  (run ./config/discover_flac_ogg.exe)))

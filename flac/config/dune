@@ -4,9 +4,4 @@
  (foreign_stubs
   (language c)
   (names endianess))
- (libraries dune.configurator))
-
-(executable
- (name discover_flac_ogg)
- (modules discover_flac_ogg)
- (libraries dune.configurator))
+ (libraries dune-configurator))

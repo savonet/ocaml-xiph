@@ -12,7 +12,7 @@ depends: [
   "conf-libopus"
   "conf-pkg-config"
   "ocaml" {>= "4.08.0"}
-  "dune" {>= "3.8"}
+  "dune" {>= "3.23"}
   "dune-configurator"
   "ogg" {= version}
   "odoc" {with-doc}
