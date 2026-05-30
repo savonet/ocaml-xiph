@@ -19,7 +19,9 @@ let () =
           match Pkg_config.get c with
             | None -> (false, [], [])
             | Some pc -> (
-                match Pkg_config.query pc ~package:(String.concat " " packages) with
+                match
+                  Pkg_config.query pc ~package:(String.concat " " packages)
+                with
                   | None -> (false, [], [])
                   | Some conf -> (true, conf.cflags, conf.libs))
         in

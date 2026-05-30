@@ -278,10 +278,9 @@ module Decoder = struct
   let decode_gen e s chan func split =
     let l = ref [] in
     let feed x = l := split x :: !l in
-    begin
-      try func e chan s feed
-      with Ogg.Not_enough_data ->
-        if List.length !l = 0 then raise Ogg.Not_enough_data
+    begin try func e chan s feed
+    with Ogg.Not_enough_data ->
+      if List.length !l = 0 then raise Ogg.Not_enough_data
     end;
     List.rev !l
 

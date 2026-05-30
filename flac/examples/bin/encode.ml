@@ -111,13 +111,12 @@ let _ =
    * spec. *)
   let buflen = channels * bits / 8 * !buflen in
   let buf = Bytes.create buflen in
-  begin
-    try
-      while true do
-        really_input ic buf 0 (Bytes.length buf);
-        encode (Flac.Encoder.from_s16le (Bytes.to_string buf) channels)
-      done
-    with End_of_file -> ()
+  begin try
+    while true do
+      really_input ic buf 0 (Bytes.length buf);
+      encode (Flac.Encoder.from_s16le (Bytes.to_string buf) channels)
+    done
+  with End_of_file -> ()
   end;
   finish ();
   close_in ic;

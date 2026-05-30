@@ -132,14 +132,13 @@ let () =
   in
   let s_o_p (h, b) = h ^ b in
   Printf.printf "Starting transcoding loop !\n%!";
-  begin
-    try
-      while true do
-        let op = Encoder.encode_page enc os generator in
-        let op = s_o_p op in
-        out op
-      done
-    with Ogg.Not_enough_data -> ()
+  begin try
+    while true do
+      let op = Encoder.encode_page enc os generator in
+      let op = s_o_p op in
+      out op
+    done
+  with Ogg.Not_enough_data -> ()
   end;
   List.iter (fun p -> out (s_o_p p)) (Ogg.Stream.terminate os);
   Unix.close fd;

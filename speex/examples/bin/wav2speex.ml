@@ -174,38 +174,37 @@ let _ =
   Printf.printf
     "Encoding to: SPEEX %d channels, %d Hz, %s, VBR: %s\nPlease wait...\n%!"
     channels infreq smode (string_of_bool !vbr);
-  begin
-    try
-      while true do
-        let buflen = 2 * fsize * channels in
-        let buf = Bytes.create buflen in
-        let feed () =
-          really_input ic buf 0 buflen;
-          let buf = Bytes.to_string buf in
-          let fbuf = fos buf in
-          assert (Array.length fbuf.(0) = fsize);
-          fbuf
-        in
-        let h, v =
-          if channels = 1 then (
-            let feed () =
-              let frame = feed () in
-              frame.(0)
-            in
-            if !float then (
-              let feed () = Array.map float_of_int (feed ()) in
-              Encoder.encode_page enc os feed)
-            else Encoder.encode_page_int enc os feed)
-          else if !float then (
-            let feed () =
-              Array.map (fun x -> Array.map float_of_int x) (feed ())
-            in
-            Encoder.encode_page_stereo enc os feed)
-          else Encoder.encode_page_int_stereo enc os feed
-        in
-        output_string oc (h ^ v)
-      done
-    with End_of_file -> ()
+  begin try
+    while true do
+      let buflen = 2 * fsize * channels in
+      let buf = Bytes.create buflen in
+      let feed () =
+        really_input ic buf 0 buflen;
+        let buf = Bytes.to_string buf in
+        let fbuf = fos buf in
+        assert (Array.length fbuf.(0) = fsize);
+        fbuf
+      in
+      let h, v =
+        if channels = 1 then (
+          let feed () =
+            let frame = feed () in
+            frame.(0)
+          in
+          if !float then (
+            let feed () = Array.map float_of_int (feed ()) in
+            Encoder.encode_page enc os feed)
+          else Encoder.encode_page_int enc os feed)
+        else if !float then (
+          let feed () =
+            Array.map (fun x -> Array.map float_of_int x) (feed ())
+          in
+          Encoder.encode_page_stereo enc os feed)
+        else Encoder.encode_page_int_stereo enc os feed
+      in
+      output_string oc (h ^ v)
+    done
+  with End_of_file -> ()
   end;
   List.iter
     (fun (ph, pb) -> output_string oc (ph ^ pb))

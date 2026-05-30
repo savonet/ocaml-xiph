@@ -169,28 +169,26 @@ let _ =
   output_string oc (ph ^ pb);
   let buflen = !buflen in
   let buf = Bytes.create buflen in
-  begin
-    try
-      while true do
-        try
-          really_input ic buf 0 buflen;
-          encode (Bytes.unsafe_to_string buf);
-          while true do
-            let ph, pb = Ogg.Stream.get_page os in
-            output_string oc (ph ^ pb)
-          done
-        with Ogg.Not_enough_data -> ()
-      done
-    with End_of_file -> ()
+  begin try
+    while true do
+      try
+        really_input ic buf 0 buflen;
+        encode (Bytes.unsafe_to_string buf);
+        while true do
+          let ph, pb = Ogg.Stream.get_page os in
+          output_string oc (ph ^ pb)
+        done
+      with Ogg.Not_enough_data -> ()
+    done
+  with End_of_file -> ()
   end;
   Encoder.end_of_stream enc os;
-  begin
-    try
-      while true do
-        let ph, pb = Ogg.Stream.get_page os in
-        output_string oc (ph ^ pb)
-      done
-    with Ogg.Not_enough_data -> ()
+  begin try
+    while true do
+      let ph, pb = Ogg.Stream.get_page os in
+      output_string oc (ph ^ pb)
+    done
+  with Ogg.Not_enough_data -> ()
   end;
   close_in ic;
   close_out oc;

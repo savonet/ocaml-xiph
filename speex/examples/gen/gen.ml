@@ -1,6 +1,6 @@
 let executable name modules libraries =
-  Printf.printf "(executable\n (name %s)\n (modules %s)\n (libraries %s))\n\n" name
-    modules
+  Printf.printf "(executable\n (name %s)\n (modules %s)\n (libraries %s))\n\n"
+    name modules
     (String.concat " " libraries)
 
 let () =

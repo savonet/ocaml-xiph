@@ -178,17 +178,16 @@ let feed_page ~position decoder page =
         granuleconv stream.dec granulepos stream.read_samples
       in
       if total_samples > stream.read_samples then begin
-        begin
-          match position with
-            | Some p ->
-                if not (Hashtbl.mem stream.index granulepos) then
-                  Hashtbl.add stream.index granulepos
-                    {
-                      index_bytes = p;
-                      samples = Int64.sub total_samples stream.read_samples;
-                      total_samples = stream.read_samples;
-                    }
-            | None -> ()
+        begin match position with
+          | Some p ->
+              if not (Hashtbl.mem stream.index granulepos) then
+                Hashtbl.add stream.index granulepos
+                  {
+                    index_bytes = p;
+                    samples = Int64.sub total_samples stream.read_samples;
+                    total_samples = stream.read_samples;
+                  }
+          | None -> ()
         end;
         stream.read_samples <- total_samples
       end
@@ -248,12 +247,11 @@ let test dec page =
 (** This should be called only * when we are near the end of * a stream... *)
 let abort dec =
   dec.started <- true;
-  begin
-    try
-      while Hashtbl.length dec.streams > 0 do
-        feed dec
-      done
-    with _ -> Hashtbl.clear dec.streams
+  begin try
+    while Hashtbl.length dec.streams > 0 do
+      feed dec
+    done
+  with _ -> Hashtbl.clear dec.streams
   end;
   Hashtbl.clear dec.finished_streams
 
@@ -658,8 +656,7 @@ let decode_audio_gen ~get_decoder ~length dec dtype f =
   let ended, id, stream = get_track dec dtype in
   try
     let f x =
-      begin
-        try incr_pos dec stream (length x.(0)) with _ -> ()
+      begin try incr_pos dec stream (length x.(0)) with _ -> ()
       end;
       f x
     in
