@@ -12,6 +12,7 @@
 
 (package
  (name ogg)
+ (allow_empty)
  (synopsis "Bindings to libogg")
  (depends
   conf-libogg
@@ -23,6 +24,7 @@
 
 (package
  (name vorbis)
+ (allow_empty)
  (synopsis "Bindings to libvorbis")
  (depends
   conf-libvorbis
@@ -35,6 +37,7 @@
 
 (package
  (name speex)
+ (allow_empty)
  (synopsis "Bindings to libspeex")
  (depends
   conf-libogg
@@ -48,6 +51,7 @@
 
 (package
  (name theora)
+ (allow_empty)
  (synopsis "Bindings to libtheora")
  (depends
   conf-libtheora
@@ -59,6 +63,7 @@
 
 (package
  (name opus)
+ (allow_empty)
  (synopsis "Bindings to libopus")
  (depends
   conf-libogg
@@ -72,6 +77,7 @@
 
 (package
  (name flac)
+ (allow_empty)
  (synopsis "Bindings to libflac")
  (depends
   conf-libflac

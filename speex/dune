@@ -2,7 +2,8 @@
  (name speex)
  (public_name speex)
  (synopsis "OCaml bindings for libspeex")
- (enabled_if (= %{read:../detect/speex_available} true))
+ (enabled_if
+  (= %{read:../detect/speex_available} true))
  (libraries ogg)
  (modules speex)
  (foreign_stubs
@@ -12,6 +13,14 @@
    (:include ../detect/speex_c_flags.sexp)))
  (c_library_flags
   (:include ../detect/speex_c_library_flags.sexp)))
+
+(rule
+ (alias install)
+ (package speex)
+ (action
+  (with-stdin-from
+   ../detect/speex_available
+   (run ../detect/check.exe speex))))
 
 (library
  (name speex_decoder)

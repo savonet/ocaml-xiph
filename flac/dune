@@ -2,7 +2,8 @@
  (name flac)
  (public_name flac)
  (synopsis "OCaml bindings for libflac")
- (enabled_if (= %{read:../detect/flac_available} true))
+ (enabled_if
+  (= %{read:../detect/flac_available} true))
  (modules flac)
  (libraries unix)
  (foreign_stubs
@@ -14,11 +15,20 @@
  (c_library_flags
   (:include ../detect/flac_c_library_flags.sexp)))
 
+(rule
+ (alias install)
+ (package flac)
+ (action
+  (with-stdin-from
+   ../detect/flac_available
+   (run ../detect/check.exe flac))))
+
 (library
  (name flac_ogg)
  (public_name flac.ogg)
  (synopsis "API to decode flac data in ogg container")
- (enabled_if (= %{read:../detect/flac_ogg_available} true))
+ (enabled_if
+  (= %{read:../detect/flac_ogg_available} true))
  (libraries flac ogg)
  (optional)
  (modules flac_ogg)

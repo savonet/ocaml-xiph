@@ -1,5 +1,5 @@
-(executable
- (name detect)
+(executables
+ (names detect check)
  (libraries dune-configurator))
 
 (rule
@@ -13,7 +13,10 @@
   (run ./detect.exe flac flac)))
 
 (rule
- (targets flac_ogg_available flac_ogg_c_flags.sexp flac_ogg_c_library_flags.sexp)
+ (targets
+  flac_ogg_available
+  flac_ogg_c_flags.sexp
+  flac_ogg_c_library_flags.sexp)
  (action
   (run ./detect.exe flac_ogg ogg flac)))
 
