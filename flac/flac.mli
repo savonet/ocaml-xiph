@@ -36,7 +36,7 @@ module Decoder : sig
     * let output = (..a function of type write..) in
     * (* Create callbacks *)
     * let callbacks = Flac.Decoder.get_callbacks input write in
-    * (* Create an unitialized decoder *)
+    * (* Create an uninitialized decoder *)
     * let decoder = Flac.Decoder.create callbacks in
     * (* Initialize decoder *)
     * let decoder,info,comments = Flac.Decoder.init decoder callbacks in
@@ -126,7 +126,7 @@ module Decoder : sig
   (** {3 Functions} *)
 
   (** Create a decoder. The decoder will be used to decode * all metadata.
-      Initial audio data shall be immediatly available * after this call. *)
+      Initial audio data shall be immediately available * after this call. *)
   val create :
     ?seek:(int64 -> unit) ->
     ?tell:(unit -> int64) ->
@@ -228,7 +228,7 @@ module Encoder : sig
     * - Encoded data should have the same number of channels as
     *   specified in encoder's parameters and the same number of
     *   samples in each channels.
-    * - See FLAC documentation for informations about the callbacks.
+    * - See FLAC documentation for information about the callbacks.
     *   Note in particular that some information about encoded data
     *   such as md5 sum and total samples are only written when a
     *   [seek] callback is given.
@@ -255,7 +255,7 @@ module Encoder : sig
 
   (** {3 Exceptions} *)
 
-  (** Raised when submiting invalid data to * encode *)
+  (** Raised when submitting invalid data to * encode *)
   exception Invalid_data
 
   (** Raised when initiating an encoder with * invalid metadata. You can use
@@ -315,5 +315,5 @@ module Encoder : sig
   end
 end
 
-(** Raised when an internal error occured. Should be * reported if seen. *)
+(** Raised when an internal error occurred. Should be * reported if seen. *)
 exception Internal

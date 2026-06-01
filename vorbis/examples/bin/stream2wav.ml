@@ -96,11 +96,11 @@ let _ =
     with Ogg.Bad_data -> fill os
     (*Do not care about page that are not for us.. *)
   in
-  (* Test wether the stream contains vorbis *)
+  (* Test whether the stream contains vorbis *)
   let test_vorbis () =
     (* Get First page *)
     let page = Ogg.Sync.read sync in
-    (* Check wether this is a b_o_s *)
+    (* Check whether this is a b_o_s *)
     if not (Ogg.Page.bos page) then raise Not_found;
     (* Create a stream with this ID *)
     let serial = Ogg.Page.serialno page in
@@ -125,7 +125,7 @@ let _ =
   let rec init () =
     try test_vorbis ()
     with
-    (* Not_found is not catched: ogg stream always start
+    (* Not_found is not caught: ogg stream always start
         with all b_o_s and we don't care about sequenced streams here *)
     | Ogg.Bad_data | Not_found ->
       Printf.printf "This stream was not vorbis..\n";

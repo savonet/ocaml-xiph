@@ -499,7 +499,7 @@ static unsigned char header_packet[19] = {
     1, 2, 0, 0,
     /* Samperate (32 bits, unsigned, little endian) */
     0, 0, 0, 0,
-    /* output gain (16 bits, signed, little endian), channels mapping familly,
+    /* output gain (16 bits, signed, little endian), channels mapping family,
      * stream count (always 0 in this implementation) */
     0, 0, 0};
 

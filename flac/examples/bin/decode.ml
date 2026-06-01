@@ -82,7 +82,7 @@ let process () =
       let test_flac () =
         (* Get First page *)
         let page = Ogg.Sync.read sync in
-        (* Check wether this is a b_o_s *)
+        (* Check whether this is a b_o_s *)
         if not (Ogg.Page.bos page) then raise Flac.Decoder.Not_flac;
         (* Create a stream with this ID *)
         let serial = Ogg.Page.serialno page in

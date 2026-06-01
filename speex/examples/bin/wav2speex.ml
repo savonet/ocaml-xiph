@@ -72,7 +72,7 @@ let _ =
               | "narrowband" -> mode := Narrowband
               | "wideband" -> mode := Wideband
               | "ultra-wideband" -> mode := Ultra_wideband
-              | _ -> failwith "unkown mode"),
+              | _ -> failwith "unknown mode"),
         f
           "Encoding mode, one of \"narrowband\", \"wideband\" or \
            \"ultra-wideband\". Default: %s"

@@ -134,7 +134,7 @@ exception Not_available
 
 (* This exception has a different semantics than [Ogg.End_of_stream].
  * [Ogg.End_of_stream] is raised when end of data has been reached,
- * while this exception is raised when end of a logical stream has 
+ * while this exception is raised when end of a logical stream has
  * been reached.. *)
 exception End_of_stream
 
@@ -146,7 +146,7 @@ let get_some x = match x with Some x -> x | None -> assert false
 let ogg_decoders = Hashtbl.create 1
 let log dec = Printf.ksprintf dec.log
 
-(* End of stream is declared only when 
+(* End of stream is declared only when
  * all logical stream have ended (dec.streams = 0)
  * _and_ all their data has been consumed (dec.finished_streams = 0) *)
 let eos dec =
@@ -261,7 +261,7 @@ let parse dec =
     try
       (* Get First page *)
       let position, page = get_page dec in
-      (* Check wether this is a b_o_s *)
+      (* Check whether this is a b_o_s *)
       if not (Ogg.Page.bos page) then raise (Internal (page, position));
       let serial, os, decoder = test dec page in
       (* Should not happen *)
@@ -316,7 +316,7 @@ let get_ogg_sync dec = dec.sync
 
 let reset dec =
   if Hashtbl.length dec.streams > 0 || Hashtbl.length dec.finished_streams > 0
-  then log dec "Reseting a stream that has not ended!";
+  then log dec "Resetting a stream that has not ended!";
   Hashtbl.clear dec.streams;
   Hashtbl.clear dec.finished_streams;
   dec.started <- false;
@@ -601,7 +601,7 @@ let seek ?(relative = false) dec time =
     if Ogg.Page.serialno page = x.sync_id then feed_sync_page x page
   in
   List.iter reiniate sync_points;
-  (* Get to the next sync point for 
+  (* Get to the next sync point for
    * each streams. *)
   let resync x =
     sync_forward dec sync_points x;
@@ -665,7 +665,7 @@ let decode_audio_gen ~get_decoder ~length dec dtype f =
   | ( End_of_stream
     (* In very rare cases (e.g. with a track that
      * does not have any data to decode), [Ogg.Not_enough_data]
-     * may be raised at the end of the track instead of 
+     * may be raised at the end of the track instead of
      * [End_of_stream]. Thus, we also catch it here
      * but re-raise it if the track has not ended yet. *)
     | Ogg.Not_enough_data ) as e
@@ -707,7 +707,7 @@ let decode_video dec dtype f =
     match stream.dec with Video d -> d.decode f | _ -> assert false
   with (End_of_stream | Ogg.Not_enough_data) as e ->
     if ended then begin
-      log dec "All data from stream %nx has been decoded: droping stream." id;
+      log dec "All data from stream %nx has been decoded: dropping stream." id;
       Hashtbl.remove dec.finished_streams id
       (* Reraise [Ogg.Not_enough_data] to feed the
        * decoder. *)

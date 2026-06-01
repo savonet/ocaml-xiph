@@ -3,5 +3,5 @@
  (modules discover_flac)
  (foreign_stubs
   (language c)
-  (names endianess))
+  (names endianness))
  (libraries dune-configurator))

@@ -20,7 +20,7 @@
 
 (**
   * Decode from or encode to the Ogg Vorbis compressed audio format;
-  * or get informations about an Ogg Vorbis file.
+  * or get information about an Ogg Vorbis file.
   *
   * @author Samuel Mimram, Julien Cristau, David Baelde
   *)
@@ -90,7 +90,7 @@ val string_of_exc : exn -> string option
     bitsream. *)
 type bitstream = int
 
-(** Vorbis informations about a file. *)
+(** Vorbis information about a file. *)
 type info = {
   vorbis_version : int;  (** version of vorbis codec, must be 0 *)
   audio_channels : int;  (** number of audio channels *)
@@ -129,7 +129,7 @@ module Encoder : sig
   val headerout :
     ?encoder:string -> t -> Ogg.Stream.stream -> (string * string) list -> unit
 
-  (** Encoder a header, but do not submit packet to * Ogg Stream. Usefull when
+  (** Encoder a header, but do not submit packet to * Ogg Stream. Useful when
       multiplexing ogg streams * since the all first packets of each streams
       must be packed * in the initial pages. *)
   val headerout_packetout :
@@ -179,7 +179,7 @@ module Decoder : sig
   (** Get vorbis comments from the decoder *)
   val comments : t -> string * (string * string) list
 
-  (** Check wether a ogg packet contains vorbis data. * Usefull for parsing ogg
+  (** Check whether a ogg packet contains vorbis data. * Useful for parsing ogg
       containers with multiple streams. *)
   val check_packet : Ogg.Stream.packet -> bool
 

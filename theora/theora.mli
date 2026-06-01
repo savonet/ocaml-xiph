@@ -179,7 +179,7 @@ module Decoder : sig
   (** Type for an initialized decoder. *)
   type t
 
-  (** * Check wether an ogg logical stream contains theora data * * This
+  (** * Check whether an ogg logical stream contains theora data * * This
       function shall be called just after you put * the first page in the
       stream. See examples/thdecode.ml * * Raises [Ogg.Bad_data] if the stream
       does not contain theora data. *)
@@ -200,10 +200,10 @@ module Decoder : sig
 
   (** * Output the next available frame of decoded YUV data. * * Raises
       [Ogg.Not_enough_data] if the Ogg.Stream.stream which * has been used to
-      initialize the handler does not contain * enought data. You should submit
-      a new page to it, and * run this function again until it returns. * *
-      Raises [Not_initialized] if the decoder was not properly * initialized
-      with [headerin]. *)
+      initialize the handler does not contain * enough data. You should submit a
+      new page to it, and * run this function again until it returns. * * Raises
+      [Not_initialized] if the decoder was not properly * initialized with
+      [headerin]. *)
   val get_yuv : t -> Ogg.Stream.stream -> yuv_buffer
 
   (** Convert a granulepos to an absolute frame index, starting at 0. * The

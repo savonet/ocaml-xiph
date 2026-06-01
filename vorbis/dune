@@ -17,6 +17,9 @@
 (rule
  (alias install)
  (package vorbis)
+ (enabled_if
+  (not
+   (= %{env:LIQUIDSOAP_INSTALL_NO_OPTIONAL_FAIL=false} true)))
  (action
   (with-stdin-from
    ../detect/vorbis_available

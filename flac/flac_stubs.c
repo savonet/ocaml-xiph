@@ -469,7 +469,7 @@ CAMLprim value ocaml_flac_decoder_init(value _dec) {
 
   ocaml_flac_decoder *dec = Decoder_val(_dec);
 
-  // Intialize decoder
+  // Initialize decoder
   caml_release_runtime_system();
   FLAC__stream_decoder_init_stream(
       dec->decoder, dec_read_callback, dec_seek_callback, dec_tell_callback,

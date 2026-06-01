@@ -17,6 +17,9 @@
 (rule
  (alias install)
  (package theora)
+ (enabled_if
+  (not
+   (= %{env:LIQUIDSOAP_INSTALL_NO_OPTIONAL_FAIL=false} true)))
  (action
   (with-stdin-from
    ../detect/theora_available
