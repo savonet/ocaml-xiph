@@ -325,11 +325,11 @@ module Wrapper = struct
     type read = bytes -> int -> int -> int
 
     let open_sync sync =
-      (* Test wether the stream contains speex data *)
+      (* Test whether the stream contains speex data *)
       let test_speex () =
         (* Get First page *)
         let page = Ogg.Sync.read sync in
-        (* Check wether this is a b_o_s *)
+        (* Check whether this is a b_o_s *)
         if not (Ogg.Page.bos page) then raise Not_found;
         (* Create a stream with this ID *)
         let serial = Ogg.Page.serialno page in
@@ -354,7 +354,7 @@ module Wrapper = struct
       in
       let rec init () =
         try test_speex () with
-          (* Not_found is not catched: ogg stream always start
+          (* Not_found is not caught: ogg stream always start
              with all b_o_s and we don't care about sequenced streams here *)
           | Internal -> init ()
           | Ogg.Not_enough_data -> raise Not_speex

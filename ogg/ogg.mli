@@ -62,8 +62,8 @@ module Page : sig
   (** * Indicates whether this page is at the end of the logical bitstream. *)
   val eos : t -> bool
 
-  (** * Indicates whether this page is at the begining of the logical bitstream.
-  *)
+  (** * Indicates whether this page is at the beginning of the logical
+      bitstream. *)
   val bos : t -> bool
 
   (** * Indicates whether this page contains packet data which has been *
@@ -116,7 +116,7 @@ module Sync : sig
 
   (** * Read a page from [Sync.t] * * Raises [End_of_stream] if the reading
       function returned an empty string. * Raises [Out_of_sync] if data is not
-      synced and some byte where skiped. *)
+      synced and some byte where skipped. *)
   val read : t -> Page.t
 
   (** * This function is used to reset the internal counters of the * [Sync.t]
@@ -182,7 +182,7 @@ module Stream : sig
       * * This function should *not* be used. Because of ocaml's paradigm, it is
       necessary * to copy each packet since they are only valid until this
       function is called again. * When dealing with many packets, this will lead
-      to multiple unecessary memory allocation * and desallocation. * * Raises
+      to multiple unnecessary memory allocation * and desallocation. * * Raises
       [Not_enough_data] if more data is needed and another page should be
       submitted. * * Raises [Out_of_sync] if we are out of sync and there is a
       gap in the data. *)

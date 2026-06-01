@@ -3,5 +3,5 @@
  (modules discover)
  (foreign_stubs
   (language c)
-  (names endianess))
+  (names endianness))
  (libraries dune-configurator))

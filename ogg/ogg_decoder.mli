@@ -34,7 +34,7 @@
 (** Type of an ogg stream decoder. *)
 type t
 
-(** Type for callbacks used to acess encoded data. *)
+(** Type for callbacks used to access encoded data. *)
 type callbacks = {
   read : bytes -> int -> int -> int;
   seek : (int -> int) option;
@@ -120,14 +120,14 @@ exception End_of_stream
 (** {3 Initialization functions} *)
 
 (** Initiate a decoder with the given callbacks. * [log] is an optional
-    functioned used to * return logged messages during the deocding * process.
+    functioned used to * return logged messages during the decoding * process.
 *)
 val init : ?log:(string -> unit) -> callbacks -> t
 
 (** Initiate a decoder from a given file name. *)
 val init_from_file : ?log:(string -> unit) -> string -> t * Unix.file_descr
 
-(** Initate a decoder from a given [Unix.file_descriptor] *)
+(** Initiate a decoder from a given [Unix.file_descriptor] *)
 val init_from_fd : ?log:(string -> unit) -> Unix.file_descr -> t
 
 (** Get the Ogg.Sync handler associated to * the decoder. Use only if know what
@@ -165,13 +165,13 @@ val drop_track : t -> track -> unit
 
 (** {3 Information functions} *)
 
-(** Get informations about the * audio track. *)
+(** Get information about the * audio track. *)
 val audio_info : t -> track -> audio_info * metadata
 
 (** [true] if the decoder can decoder to bigarray data. *)
 val can_decode_ba : t -> track -> bool
 
-(** Get informations about the * video track. *)
+(** Get information about the * video track. *)
 val video_info : t -> track -> video_info * metadata
 
 (** Get the sample_rate of the track * of that type. Returns a pair
@@ -245,7 +245,7 @@ type decoders =
 (** Type used to register a new decoder. First * element is a function used to
     check if the initial [Ogg.Stream.packet] * of an [Ogg.Stream.stream] matches
     the format decodable by this decoder. * Second element is a function that
-    instanciates the actual decoder * using the initial [Ogg.Stream.stream] used
+    instantiates the actual decoder * using the initial [Ogg.Stream.stream] used
     to pull data packets for the * decoder. *)
 type register_decoder =
   (Ogg.Stream.packet -> bool)

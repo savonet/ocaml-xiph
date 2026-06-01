@@ -1,8 +1,9 @@
 *~
-_build
+_build/
 *.byte
 *.native
 _tests
 .merlin
 *.install
 .*.sw*
+xiph.config

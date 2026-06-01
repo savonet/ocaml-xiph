@@ -479,7 +479,7 @@ CAMLprim value ocaml_theora_encode_eos(value t_state, value o_stream_state) {
   ogg_int64_t iframe;
   ogg_int64_t pframe;
 
-  /* TODO: a proper eos should be acheived using an empty ogg page with the
+  /* TODO: a proper eos should be achieved using an empty ogg page with the
    * eos marker.. */
 
   /* Try to grab a packet */

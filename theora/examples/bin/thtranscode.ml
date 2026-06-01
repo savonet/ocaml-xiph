@@ -30,11 +30,11 @@ let in_init () =
     with Ogg.Bad_data -> fill os
     (* Do not care about page that are not for us.. *)
   in
-  (* Test wether the stream is theora *)
+  (* Test whether the stream is theora *)
   let test_theora () =
     (* Get First page *)
     let page = Ogg.Sync.read sync in
-    (* Check wether this is a b_o_s *)
+    (* Check whether this is a b_o_s *)
     if not (Ogg.Page.bos page) then raise No_theora;
     (* Create a stream with this ID *)
     let serial = Ogg.Page.serialno page in

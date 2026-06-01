@@ -1,5 +1,9 @@
-ocaml-xiph
-============
+# ocaml-xiph
+
+> [!WARNING]
+> This repository is read-only. All changes must be made in
+> [savonet/liquidsoap](https://github.com/savonet/liquidsoap) under
+> `src/modules/synced/xiph/` and will be mirrored here automatically.
 
 ![GitHub](https://img.shields.io/github/license/savonet/ocaml-xiph)
 ![CI](https://github.com/savonet/ocaml-xiph/workflows/CI/badge.svg)
@@ -7,13 +11,11 @@ ocaml-xiph
 
 This repository provides various OCaml bindings to the [xiph](https://xiph.org/) libraries.
 
-Documentation:
-=============
+# Documentation:
 
 The [API documentation is available here](http://www.liquidsoap.info/ocaml-xiph/).
 
-Prerequisites:
-==============
+# Prerequisites:
 
 - ocaml
 - dune
@@ -27,8 +29,7 @@ Prerequisites:
 
 See [dune-project](dune-project) file for versions.
 
-Installation:
-=============
+# Installation:
 
 The preferred installation method is via [opam](http://opam.ocaml.org/):
 
@@ -44,8 +45,7 @@ opam install .
 
 From within this repository.
 
-Compilation:
-============
+# Compilation:
 
 ```
 dune build

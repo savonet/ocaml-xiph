@@ -20,7 +20,7 @@
 
 (**
   * Decode from or encode to the Ogg Vorbis compressed audio format; or get
-  * informations about an Ogg Vorbis file.
+  * information about an Ogg Vorbis file.
   *
   * @author Samuel Mimram
   *)
@@ -164,7 +164,7 @@ module Encoder = struct
   (* We encode a buffer with 0 samples to finish
    * the stream, according to the documentation of
    * vorbis_analysis_wrote:
-   * "A value of zero means all input data has been provided and 
+   * "A value of zero means all input data has been provided and
    * the compressed stream should be finalized." *)
   let end_of_stream enc os =
     let chans = get_channels enc in
